@@ -25,6 +25,7 @@ function Menu({ items, className }) {
                                 setHistory([...newHistory]);
                             }
                         }}
+                        className={item.type}
                     ></MenuItem>
                 );
             })}
