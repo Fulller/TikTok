@@ -4,13 +4,13 @@
     border-radius: 4px;
     font-weight: 700;
     border: 1px solid transparent;
-    // margin: 0px 6px;
     &:hover {
         cursor: pointer;
     }
     + .wrapper {
         margin-left: 14px;
     }
+    background-color: transparent;
 }
 .primary {
     color: white;

@@ -8,9 +8,25 @@ import style from './Header.module.scss';
 import { Wrapper as PopperWrapper } from '../../../Popper';
 import AcountItem from '../../../AcountItem';
 import Button from '../../../Button';
+import Menu from '../../../Popper/Menu';
 let cx = classNames.bind(style);
+let menuList = [
+    {
+        icon: <i class="fa-solid fa-globe"></i>,
+        title: 'English',
+    },
+    {
+        icon: <i class="fa-regular fa-circle-question"></i>,
+        title: 'Feedback and help',
+        to: '/feedback',
+    },
+    {
+        icon: <i class="fa-regular fa-keyboard"></i>,
+        title: 'Keyboad shotcuts',
+    },
+];
 function Header() {
-    let [seacrchResult, setSeacrchResult] = useState([]);
+    let [seacrchResult, setSeacrchResult] = useState([1, 2]);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -20,8 +36,7 @@ function Header() {
                     </Link>
                 </div>
                 <Tippy
-                    visible={seacrchResult.length > 0}
-                    interactive={true}
+                    visible={false}
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
@@ -51,6 +66,24 @@ function Header() {
                     <Button primary>
                         <span>Log in</span>
                     </Button>
+                    <Tippy
+                        interactive
+                        placement="bottom-end"
+                        delay={[0, 600]}
+                        render={(attrs) => (
+                            <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+                                <PopperWrapper>
+                                    <Menu className="menu-list" data={menuList}></Menu>
+                                </PopperWrapper>
+                            </div>
+                        )}
+                    >
+                        <div className={cx('menu')}>
+                            <Button>
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </Button>
+                        </div>
+                    </Tippy>
                 </div>
             </div>
         </header>

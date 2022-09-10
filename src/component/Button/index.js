@@ -2,7 +2,7 @@ import { Link, resolvePath } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './Button.module.scss';
 let cx = classNames.bind(styles);
-function Button({ children, ...props }) {
+function Button({ children, className, ...props }) {
     let Tag = 'button';
     let classes = ['wrapper'];
     for (let prop in props) {
@@ -41,7 +41,7 @@ function Button({ children, ...props }) {
         }
     }
     return (
-        <Tag className={cx(...classes)} {...props}>
+        <Tag className={cx(...classes, className)} {...props}>
             {children}
         </Tag>
     );

@@ -82,3 +82,10 @@
 .action {
     display: flex;
 }
+.menu {
+    margin: 0px 12px;
+}
+.menu-list {
+    display: flex;
+    flex-direction: column;
+}
