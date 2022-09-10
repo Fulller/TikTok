@@ -70,3 +70,15 @@
         color: rgba(0, 0, 0, 0.3);
     }
 }
+.search-result {
+    width: 329px;
+    .search-title {
+        color: rgba(0, 0, 0, 0.6);
+        font-weight: 400;
+        padding: 8px;
+        font-size: 15px;
+    }
+}
+.action {
+    display: flex;
+}

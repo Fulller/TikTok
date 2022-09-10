@@ -1,0 +1,48 @@
+.wrapper {
+    font-size: 16px;
+    padding: 9px 16px;
+    border-radius: 4px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    // margin: 0px 6px;
+    &:hover {
+        cursor: pointer;
+    }
+    + .wrapper {
+        margin-left: 14px;
+    }
+}
+.primary {
+    color: white;
+    background-color: var(--primary);
+    &:hover {
+        background-color: rgb(222, 38, 75);
+    }
+}
+.outline {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.small {
+    font-size: 16px;
+    padding: 4px 16px;
+}
+.large {
+    padding: 14px 16px;
+}
+.text {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    border-radius: 4px;
+    font-weight: 540;
+    color: rgba(0, 0, 0, 0.8);
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+.disable {
+    opacity: 0.5;
+    &:hover {
+        background-color: var(--primary);
+    }
+}

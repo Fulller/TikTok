@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    padding: 8px;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 8px;
+}
+.name {
+    font-weight: 600;
+    span {
+        margin-right: 8px;
+    }
+    i {
+        color: rgb(32 213 236);
+        font-size: 14px;
+    }
+}
+.username {
+    font-weight: 100;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+}

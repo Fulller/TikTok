@@ -2,6 +2,7 @@
 :root {
     --default-layout-header-height: 60px;
     --default-layout-width: 1105px;
+    --primary: rgb(254, 44, 85);
 }
 * {
     margin: 0;
@@ -21,4 +22,7 @@ input,
 button {
     border: none;
     outline: none;
+}
+a {
+    text-decoration: none;
 }
