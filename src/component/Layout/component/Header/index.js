@@ -14,6 +14,36 @@ let menuList = [
     {
         icon: <i class="fa-solid fa-globe"></i>,
         title: 'English',
+        children: {
+            title: 'Languae',
+            data: [
+                {
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                    children: {
+                        title: 'Side',
+                        data: [
+                            {
+                                code: 'vi',
+                                title: 'Bắc',
+                            },
+                            {
+                                code: 'en',
+                                title: 'Trung',
+                            },
+                            {
+                                code: 'en',
+                                title: 'Nam',
+                            },
+                        ],
+                    },
+                },
+                {
+                    code: 'en',
+                    title: 'English',
+                },
+            ],
+        },
     },
     {
         icon: <i class="fa-regular fa-circle-question"></i>,
@@ -73,7 +103,7 @@ function Header() {
                         render={(attrs) => (
                             <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
                                 <PopperWrapper>
-                                    <Menu className="menu-list" data={menuList}></Menu>
+                                    <Menu className="menu-list" items={menuList}></Menu>
                                 </PopperWrapper>
                             </div>
                         )}
