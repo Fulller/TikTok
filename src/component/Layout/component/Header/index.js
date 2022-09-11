@@ -4,6 +4,7 @@ import React from 'react';
 import Tippy from '@tippyjs/react/headless';
 import TollTips from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import axios from 'axios';
 
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
@@ -97,8 +98,41 @@ function Header() {
     let [isShow, setIsShow] = useState(false);
     function handleClear() {
         setSearchValue('');
+        setSeacrchResult([]);
+        setIsShow(false);
         inputRef.current.focus();
     }
+    useEffect(() => {
+        // if (searchValue.trim() != '') {
+        //     fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${searchValue.trim()}&type=less`)
+        //         .then((res) => res.json())
+        //         .then((req) => {
+        //             setSeacrchResult(req.data);
+        //         });
+        // }
+        // if (seacrchResult.length > 0 && searchValue.trim() != '') {
+        //     setIsShow(true);
+        // } else {
+        //     setIsShow(false);
+        // }
+        if (searchValue.trim() != '') {
+            axios
+                .get('https://tiktok.fullstack.edu.vn/api/users/search', {
+                    params: {
+                        q: searchValue.trim(),
+                        type: 'less',
+                    },
+                })
+                .then(function (response) {
+                    setSeacrchResult(response.data.data);
+                });
+        }
+        if (seacrchResult.length > 0 && searchValue.trim() != '') {
+            setIsShow(true);
+        } else {
+            setIsShow(false);
+        }
+    }, [searchValue]);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -109,14 +143,14 @@ function Header() {
                 </div>
                 <Tippy
                     visible={isShow}
+                    onClickOutside={() => setIsShow(false)}
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
                                 <h4 className={cx('search-title')}>Acounts</h4>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
+                                {seacrchResult.map((item) => {
+                                    return <AcountItem data={item}></AcountItem>;
+                                })}
                             </PopperWrapper>
                         </div>
                     )}
