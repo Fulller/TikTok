@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import Tippy from '@tippyjs/react/headless';
@@ -91,7 +91,32 @@ let menuListLogIn = [
 ];
 function Header() {
     let isLogin = true;
-    let [seacrchResult, setSeacrchResult] = useState([1, 2]);
+    let inputRef = useRef();
+    let [seacrchResult, setSeacrchResult] = useState([]);
+    let [searchValue, setSearchValue] = useState('');
+    let [isShow, setIsShow] = useState(false);
+    function handleClear() {
+        setSearchValue('');
+        inputRef.current.focus();
+    }
+    useEffect(() => {
+        if (searchValue.trim()) {
+            fetch(
+                `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+                    searchValue.trim(),
+                )}&tyee=less`,
+            )
+                .then((res) => res.json())
+                .then((req) => {
+                    setSeacrchResult([...req.data]);
+                });
+        }
+        if (seacrchResult.length > 0) {
+            setIsShow(true);
+        } else {
+            setIsShow(false);
+        }
+    }, [searchValue]);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -101,22 +126,37 @@ function Header() {
                     </Link>
                 </div>
                 <Tippy
-                    visible={false}
+                    visible={isShow}
+                    onClickOutside={() => {
+                        setIsShow(false);
+                    }}
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
                                 <h4 className={cx('search-title')}>Acounts</h4>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
+                                {seacrchResult.map((item) => {
+                                    return <AcountItem data={item}></AcountItem>;
+                                })}
                             </PopperWrapper>
                         </div>
                     )}
                 >
                     <div className={cx('search')}>
-                        <input spellCheck="false" placeholder="Search accounts and videos"></input>
-                        <i className={cx('fa-solid fa-circle-xmark')}></i>
+                        <input
+                            ref={inputRef}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            spellCheck="false"
+                            placeholder="Search accounts and videos"
+                            onFocus={() => {
+                                if (seacrchResult.length > 0) {
+                                    setIsShow(true);
+                                } else {
+                                    setIsShow(false);
+                                }
+                            }}
+                        ></input>
+                        <i onClick={handleClear} className={cx('fa-solid fa-circle-xmark')}></i>
                         <span></span>
                         <button className={cx('search-btn')}>
                             <i className={cx('fa-solid fa-magnifying-glass')}></i>
