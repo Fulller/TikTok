@@ -4,6 +4,7 @@ import React from 'react';
 import Tippy from '@tippyjs/react/headless';
 import TollTips from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import axios from 'axios';
 
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
@@ -97,18 +98,36 @@ function Header() {
     let [isShow, setIsShow] = useState(false);
     function hanleClear() {
         setSearchValue('');
+        setSeacrchResult([]);
+        setIsShow(false);
         inputRef.current.focus();
     }
     useEffect(() => {
-        if (searchValue.trim()) {
-            fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${searchValue.trim()}&type=less`)
-                .then((res) => res.json())
-                .then((req) => {
-                    setSeacrchResult(req.data);
+        // if (searchValue.trim() != '') {
+        //     fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${searchValue.trim()}&type=less`)
+        //         .then((res) => res.json())
+        //         .then((req) => {
+        //             setSeacrchResult(req.data);
+        //         });
+        // }
+        // if (seacrchResult.length > 0 && searchValue.trim() != '') {
+        //     setIsShow(true);
+        // } else {
+        //     setIsShow(false);
+        // }
+        if (searchValue.trim() != '') {
+            axios
+                .get('https://tiktok.fullstack.edu.vn/api/users/search', {
+                    params: {
+                        q: searchValue.trim(),
+                        type: 'less',
+                    },
+                })
+                .then(function (response) {
+                    setSeacrchResult(response.data.data);
                 });
         }
-        console.log(seacrchResult);
-        if (seacrchResult.length > 0) {
+        if (seacrchResult.length > 0 && searchValue.trim() != '') {
             setIsShow(true);
         } else {
             setIsShow(false);
