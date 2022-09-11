@@ -92,10 +92,17 @@ let menuListLogIn = [
 function Header() {
     let isLogin = true;
     let inputRef = useRef();
+<<<<<<< HEAD
     let [seacrchResult, setSeacrchResult] = useState([1, 2]);
     let [searchValue, setSearchValue] = useState('');
     let [isShow, setIsShow] = useState(false);
     function handleClear() {
+=======
+    let [seacrchResult, setSeacrchResult] = useState([]);
+    let [searchValue, setSearchValue] = useState('');
+    let [isShow, setIsShow] = useState(false);
+    function hanleClear() {
+>>>>>>> fix
         setSearchValue('');
         inputRef.current.focus();
     }
@@ -129,7 +136,11 @@ function Header() {
                             spellCheck="false"
                             placeholder="Search accounts and videos"
                         ></input>
+<<<<<<< HEAD
                         <i onClick={handleClear} className={cx('fa-solid fa-circle-xmark')}></i>
+=======
+                        <i onClick={hanleClear} className={cx('fa-solid fa-circle-xmark')}></i>
+>>>>>>> fix
                         <span></span>
                         <button className={cx('search-btn')}>
                             <i className={cx('fa-solid fa-magnifying-glass')}></i>
@@ -209,5 +220,4 @@ function Header() {
         </header>
     );
 }
-console.log('ok');
 export default Header;
