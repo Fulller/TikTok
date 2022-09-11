@@ -99,6 +99,21 @@ function Header() {
         setSearchValue('');
         inputRef.current.focus();
     }
+    useEffect(() => {
+        if (searchValue.trim()) {
+            fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${searchValue.trim()}&type=less`)
+                .then((res) => res.json())
+                .then((req) => {
+                    setSeacrchResult(req.data);
+                });
+        }
+        console.log(seacrchResult);
+        if (seacrchResult.length > 0) {
+            setIsShow(true);
+        } else {
+            setIsShow(false);
+        }
+    }, [searchValue]);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -108,15 +123,15 @@ function Header() {
                     </Link>
                 </div>
                 <Tippy
-                    visible={false}
+                    visible={isShow}
+                    onClickOutside={() => setIsShow(false)}
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
                                 <h4 className={cx('search-title')}>Acounts</h4>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
+                                {seacrchResult.map((item) => {
+                                    return <AcountItem data={item}></AcountItem>;
+                                })}
                             </PopperWrapper>
                         </div>
                     )}
