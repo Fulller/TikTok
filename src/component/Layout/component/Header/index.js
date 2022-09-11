@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState, useRef } from 'react';
+=======
+import { useState, useRef, useEffect } from 'react';
+>>>>>>> work
 import { Link } from 'react-router-dom';
 import React from 'react';
 import Tippy from '@tippyjs/react/headless';
@@ -92,13 +96,38 @@ let menuListLogIn = [
 function Header() {
     let isLogin = true;
     let inputRef = useRef();
+<<<<<<< HEAD
     let [seacrchResult, setSeacrchResult] = useState([1, 2]);
+=======
+    let [seacrchResult, setSeacrchResult] = useState([]);
+>>>>>>> work
     let [searchValue, setSearchValue] = useState('');
     let [isShow, setIsShow] = useState(false);
     function handleClear() {
         setSearchValue('');
         inputRef.current.focus();
     }
+<<<<<<< HEAD
+=======
+    useEffect(() => {
+        if (searchValue.trim()) {
+            fetch(
+                `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
+                    searchValue.trim(),
+                )}&tyee=less`,
+            )
+                .then((res) => res.json())
+                .then((req) => {
+                    setSeacrchResult([...req.data]);
+                });
+        }
+        if (seacrchResult.length > 0) {
+            setIsShow(true);
+        } else {
+            setIsShow(false);
+        }
+    }, [searchValue]);
+>>>>>>> work
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -109,14 +138,19 @@ function Header() {
                 </div>
                 <Tippy
                     visible={isShow}
+<<<<<<< HEAD
+=======
+                    onClickOutside={() => {
+                        setIsShow(false);
+                    }}
+>>>>>>> work
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
                                 <h4 className={cx('search-title')}>Acounts</h4>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
-                                <AcountItem></AcountItem>
+                                {seacrchResult.map((item) => {
+                                    return <AcountItem data={item}></AcountItem>;
+                                })}
                             </PopperWrapper>
                         </div>
                     )}
@@ -128,6 +162,16 @@ function Header() {
                             onChange={(e) => setSearchValue(e.target.value)}
                             spellCheck="false"
                             placeholder="Search accounts and videos"
+<<<<<<< HEAD
+=======
+                            onFocus={() => {
+                                if (seacrchResult.length > 0) {
+                                    setIsShow(true);
+                                } else {
+                                    setIsShow(false);
+                                }
+                            }}
+>>>>>>> work
                         ></input>
                         <i onClick={handleClear} className={cx('fa-solid fa-circle-xmark')}></i>
                         <span></span>
