@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import Tippy from '@tippyjs/react/headless';
@@ -91,7 +91,14 @@ let menuListLogIn = [
 ];
 function Header() {
     let isLogin = true;
+    let inputRef = useRef();
     let [seacrchResult, setSeacrchResult] = useState([1, 2]);
+    let [searchValue, setSearchValue] = useState('');
+    let [isShow, setIsShow] = useState(false);
+    function handleClear() {
+        setSearchValue('');
+        inputRef.current.focus();
+    }
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -101,7 +108,7 @@ function Header() {
                     </Link>
                 </div>
                 <Tippy
-                    visible={false}
+                    visible={isShow}
                     render={(attrs) => (
                         <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                             <PopperWrapper>
@@ -115,8 +122,14 @@ function Header() {
                     )}
                 >
                     <div className={cx('search')}>
-                        <input spellCheck="false" placeholder="Search accounts and videos"></input>
-                        <i className={cx('fa-solid fa-circle-xmark')}></i>
+                        <input
+                            ref={inputRef}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            spellCheck="false"
+                            placeholder="Search accounts and videos"
+                        ></input>
+                        <i onClick={handleClear} className={cx('fa-solid fa-circle-xmark')}></i>
                         <span></span>
                         <button className={cx('search-btn')}>
                             <i className={cx('fa-solid fa-magnifying-glass')}></i>
