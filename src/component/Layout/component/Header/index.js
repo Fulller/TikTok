@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import Tippy from '@tippyjs/react/headless';
@@ -91,7 +91,14 @@ let menuListLogIn = [
 ];
 function Header() {
     let isLogin = true;
-    let [seacrchResult, setSeacrchResult] = useState([1, 2]);
+    let inputRef = useRef();
+    let [seacrchResult, setSeacrchResult] = useState([]);
+    let [searchValue, setSearchValue] = useState('');
+    let [isShow, setIsShow] = useState(false);
+    function hanleClear() {
+        setSearchValue('');
+        inputRef.current.focus();
+    }
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -115,8 +122,14 @@ function Header() {
                     )}
                 >
                     <div className={cx('search')}>
-                        <input spellCheck="false" placeholder="Search accounts and videos"></input>
-                        <i className={cx('fa-solid fa-circle-xmark')}></i>
+                        <input
+                            ref={inputRef}
+                            value={searchValue}
+                            onChange={(e) => setSearchValue(e.target.value)}
+                            spellCheck="false"
+                            placeholder="Search accounts and videos"
+                        ></input>
+                        <i onClick={hanleClear} className={cx('fa-solid fa-circle-xmark')}></i>
                         <span></span>
                         <button className={cx('search-btn')}>
                             <i className={cx('fa-solid fa-magnifying-glass')}></i>
@@ -196,5 +209,4 @@ function Header() {
         </header>
     );
 }
-console.log('ok');
 export default Header;
